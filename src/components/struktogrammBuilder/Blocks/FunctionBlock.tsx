@@ -1,5 +1,4 @@
 import React, { JSX, useState } from "react";
-import { useDroppable, useDndMonitor } from "@dnd-kit/core";
 import {
   ProcessBlock,
   IfBlock,
@@ -8,6 +7,7 @@ import {
   OutputBlock,
 } from "./index";
 import { BlockType } from "../../../types/struktogrammTypes";
+import DropZone from "../DropZone";
 import "./FunctionBlock.css";
 
 interface FunctionBlockProps {
@@ -16,31 +16,10 @@ interface FunctionBlockProps {
 }
 
 const FunctionBlock: React.FC<FunctionBlockProps> = ({ id, functionName }) => {
-  const [aboveElement, setAboveElement] = useState<JSX.Element | null>(null);
-  const [belowElement, setBelowElement] = useState<JSX.Element | null>(null);
-
-  const { setNodeRef: setAboveRef, isOver: isOverAbove } = useDroppable({
-    id: `function-above-${id}`,
-  });
-
-  const { setNodeRef: setBelowRef, isOver: isOverBelow } = useDroppable({
-    id: `function-below-${id}`,
-  });
-
-  useDndMonitor({
-    onDragEnd: (event) => {
-      if (!event.over) return;
-      const blockType = event.active.id as BlockType;
-
-      const newBlock = getBlockComponent(blockType);
-
-      if (event.over.id === `function-above-${id}`) {
-        setAboveElement(newBlock);
-      } else if (event.over.id === `function-below-${id}`) {
-        setBelowElement(newBlock);
-      }
-    },
-  });
+  const [functionname, setfunctionname] = useState<string>(functionName);
+  const [aboveElements, setAboveElements] = useState<JSX.Element[]>([]);
+  const [belowElements, setBelowElements] = useState<JSX.Element[]>([]);
+  const [insideElements, setInsideElements] = useState<JSX.Element[]>([]);
 
   const getBlockComponent = (type: BlockType): JSX.Element => {
     const newId = crypto.randomUUID();
@@ -63,32 +42,54 @@ const FunctionBlock: React.FC<FunctionBlockProps> = ({ id, functionName }) => {
         return <InputBlock key={newId} id={newId} content="Neue Eingabe" />;
       case "output":
         return <OutputBlock key={newId} id={newId} content="Neue Ausgabe" />;
-      case "function":
-        return (
-          <FunctionBlock key={newId} id={newId} functionName="Neue Funktion" />
-        );
       default:
-        return <p>❓ Unbekannter Block</p>;
+        return <p key={newId}>❓ Unbekannter Block</p>;
     }
   };
 
   return (
     <div className="function-block">
-      <div
-        ref={setAboveRef}
-        className={`drop-zone ${isOverAbove ? "highlight" : ""}`}
+      <DropZone
+        zoneId={`function-above-${id}`}
+        onDrop={(blockType) =>
+          setAboveElements((prev) => [...prev, getBlockComponent(blockType)])
+        }
       >
-        {aboveElement || <p>⬆️ Oberhalb</p>}
-      </div>
+        <p>⬆️ Oberhalb</p>
+      </DropZone>
+      {aboveElements}
 
-      <p>🔣 CALL {functionName}()</p>
+      <p>
+        🔣 CALL{" "}
+        <input
+          className="function-input"
+          value={functionname}
+          onChange={(e) => setfunctionname(e.target.value)}
+          placeholder="Bedingung eingeben..."
+        />{" "}
+        ()
+      </p>
 
-      <div
-        ref={setBelowRef}
-        className={`drop-zone ${isOverBelow ? "highlight" : ""}`}
+      <DropZone
+        zoneId={`function-inside-${id}`}
+        onDrop={(blockType) =>
+          setInsideElements((prev) => [...prev, getBlockComponent(blockType)])
+        }
+        className="drop-zone inside"
       >
-        {belowElement || <p>⬇️ Unterhalb</p>}
-      </div>
+        <p>🔲 Innerhalb</p>
+        <div>{insideElements}</div>
+      </DropZone>
+
+      <DropZone
+        zoneId={`function-below-${id}`}
+        onDrop={(blockType) =>
+          setBelowElements((prev) => [...prev, getBlockComponent(blockType)])
+        }
+      >
+        <p>⬇️ Unterhalb</p>
+      </DropZone>
+      {belowElements}
     </div>
   );
 };

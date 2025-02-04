@@ -1,12 +1,15 @@
 .editor-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .editor-area {
   flex-grow: 1;
   padding: 20px;
   background: #fafafa;
+  height: auto;
+  width: calc(100vw - 292px);
+  margin-left: 292px;
 }
 
 .blocks-container {

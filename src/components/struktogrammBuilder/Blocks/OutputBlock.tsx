@@ -1,5 +1,4 @@
 import React, { JSX, useState } from "react";
-import { useDroppable, useDndMonitor } from "@dnd-kit/core";
 import {
   ProcessBlock,
   IfBlock,
@@ -8,6 +7,7 @@ import {
   FunctionBlock,
 } from "./index";
 import { BlockType } from "../../../types/struktogrammTypes";
+import DropZone from "../DropZone";
 import "./OutputBlock.css";
 
 interface OutputBlockProps {
@@ -16,31 +16,10 @@ interface OutputBlockProps {
 }
 
 const OutputBlock: React.FC<OutputBlockProps> = ({ id, content }) => {
+  // Hier wird wieder nur ein einzelnes Element erwartet.
+  const [Content, setContent] = useState<string>(content);
   const [aboveElement, setAboveElement] = useState<JSX.Element | null>(null);
   const [belowElement, setBelowElement] = useState<JSX.Element | null>(null);
-
-  const { setNodeRef: setAboveRef, isOver: isOverAbove } = useDroppable({
-    id: `output-above-${id}`,
-  });
-
-  const { setNodeRef: setBelowRef, isOver: isOverBelow } = useDroppable({
-    id: `output-below-${id}`,
-  });
-
-  useDndMonitor({
-    onDragEnd: (event) => {
-      if (!event.over) return;
-      const blockType = event.active.id as BlockType;
-
-      const newBlock = getBlockComponent(blockType);
-
-      if (event.over.id === `output-above-${id}`) {
-        setAboveElement(newBlock);
-      } else if (event.over.id === `output-below-${id}`) {
-        setBelowElement(newBlock);
-      }
-    },
-  });
 
   const getBlockComponent = (type: BlockType): JSX.Element => {
     const newId = crypto.randomUUID();
@@ -74,21 +53,29 @@ const OutputBlock: React.FC<OutputBlockProps> = ({ id, content }) => {
 
   return (
     <div className="output-block">
-      <div
-        ref={setAboveRef}
-        className={`drop-zone ${isOverAbove ? "highlight" : ""}`}
+      <DropZone
+        zoneId={`output-above-${id}`}
+        onDrop={(blockType) => setAboveElement(getBlockComponent(blockType))}
       >
         {aboveElement || <p>⬆️ Oberhalb</p>}
-      </div>
+      </DropZone>
 
-      <p>📢 OUTPUT: {content}</p>
+      <p>
+        📢 OUTPUT:{" "}
+        <input
+          className="Output-input"
+          value={Content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Ausgabe eingeben..."
+        />
+      </p>
 
-      <div
-        ref={setBelowRef}
-        className={`drop-zone ${isOverBelow ? "highlight" : ""}`}
+      <DropZone
+        zoneId={`output-below-${id}`}
+        onDrop={(blockType) => setBelowElement(getBlockComponent(blockType))}
       >
         {belowElement || <p>⬇️ Unterhalb</p>}
-      </div>
+      </DropZone>
     </div>
   );
 };

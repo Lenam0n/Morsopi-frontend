@@ -8,86 +8,51 @@ import {
   OutputBlock,
   FunctionBlock,
 } from "../../components/struktogrammBuilder/Blocks/index";
-
 import Sidebar from "../../components/struktogrammBuilder/Sidebar/Sidebar";
 import InitialDropzone from "../../components/struktogrammBuilder/Blocks/InitialDropzone";
-import {
-  DndContext,
-  useDroppable,
-  DragOverlay,
-  UniqueIdentifier,
-} from "@dnd-kit/core";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { Block, BlockType } from "../../types/struktogrammTypes";
+import DropZone from "../../components/struktogrammBuilder/DropZone";
 import "./Editor.css";
 
 const Editor: React.FC = () => {
-  const { blocks, addBlock, undo, redo } = useStruktogramm();
+  const { blocks, addBlock} = useStruktogramm();
   const [draggedBlock, setDraggedBlock] = useState<Block | null>(null);
   const [hoveredBlock, setHoveredBlock] = useState<string | null>(null);
-
-  const { setNodeRef: setEditorRef, isOver: isOverEditor } = useDroppable({
-    id: "editor-dropzone",
-  });
-
-  // Funktion zum Finden der nächstgelegenen Dropzone
-  const findClosestDropzone = (dropzone: { id: UniqueIdentifier } | null) => {
-    if (!dropzone || typeof dropzone.id !== "string") return null;
-    if (
-      dropzone.id.startsWith("inner-") ||
-      dropzone.id.startsWith("outer-") ||
-      dropzone.id === "editor-dropzone"
-    ) {
-      return dropzone.id;
-    }
-    return null;
-  };
 
   return (
     <DndContext
       onDragStart={(event) => {
-        const type = event.active.id as BlockType;
+        // Hole den Blocktyp aus den an den Draggable angehängten Daten
+        const type = event.active.data.current?.type as BlockType;
         setDraggedBlock({
           id: crypto.randomUUID(),
           type,
           content: "Neues Element",
         });
       }}
-      onDragEnd={(event) => {
-        const target = event.over?.id;
-        if (!target || !draggedBlock) {
-          setDraggedBlock(null);
-          return;
-        }
-
-        if (
-          typeof target === "string" &&
-          (target.startsWith("inner-") ||
-            target.startsWith("outer-") ||
-            target === "editor-dropzone")
-        ) {
-          addBlock({ ...draggedBlock, id: crypto.randomUUID() });
-          setDraggedBlock(null);
-          return;
-        }
-
-        const closestDropzone = findClosestDropzone(event.over);
-        if (closestDropzone) {
-          addBlock({ ...draggedBlock, id: crypto.randomUUID() });
-        }
-
+      // Wir entfernen hier die globale onDragEnd‑Logik, weil die einzelnen DropZones (global oder verschachtelt)
+      // den Drop selbst verarbeiten.
+      onDragEnd={() => {
         setDraggedBlock(null);
       }}
     >
       <div className="editor-container">
         <Sidebar />
-
-        <div
-          className={`editor-area ${isOverEditor ? "highlight" : ""}`}
-          ref={setEditorRef}
+        {/* Globaler Editorbereich als DropZone */}
+        <DropZone
+          zoneId="editor-dropzone"
+          onDrop={(blockType) => {
+            // Wird in den globalen Bereich (editor-dropzone) gedroppt, dann füge global hinzu.
+            addBlock({
+              id: crypto.randomUUID(),
+              type: blockType,
+              content: "Neues Element",
+            });
+          }}
+          className="editor-area"
         >
           <h1>Struktogramm-Editor</h1>
-          <button onClick={undo}>🔙 Undo</button>
-          <button onClick={redo}>🔜 Redo</button>
 
           {blocks.length === 0 ? (
             <InitialDropzone />
@@ -131,7 +96,7 @@ const Editor: React.FC = () => {
               ))}
             </div>
           )}
-        </div>
+        </DropZone>
       </div>
 
       <DragOverlay>

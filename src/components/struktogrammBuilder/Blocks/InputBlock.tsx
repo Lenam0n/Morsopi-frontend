@@ -1,5 +1,4 @@
 import React, { JSX, useState } from "react";
-import { useDroppable, useDndMonitor } from "@dnd-kit/core";
 import {
   ProcessBlock,
   IfBlock,
@@ -8,6 +7,7 @@ import {
   FunctionBlock,
 } from "./index";
 import { BlockType } from "../../../types/struktogrammTypes";
+import DropZone from "../DropZone";
 import "./InputBlock.css";
 
 interface InputBlockProps {
@@ -16,31 +16,10 @@ interface InputBlockProps {
 }
 
 const InputBlock: React.FC<InputBlockProps> = ({ id, content }) => {
+  // Hier wird nur ein einzelnes Element (statt Array) erwartet.
+  const [Content, setContent] = useState<string>(content);
   const [aboveElement, setAboveElement] = useState<JSX.Element | null>(null);
   const [belowElement, setBelowElement] = useState<JSX.Element | null>(null);
-
-  const { setNodeRef: setAboveRef, isOver: isOverAbove } = useDroppable({
-    id: `input-above-${id}`,
-  });
-
-  const { setNodeRef: setBelowRef, isOver: isOverBelow } = useDroppable({
-    id: `input-below-${id}`,
-  });
-
-  useDndMonitor({
-    onDragEnd: (event) => {
-      if (!event.over) return;
-      const blockType = event.active.id as BlockType;
-
-      const newBlock = getBlockComponent(blockType);
-
-      if (event.over.id === `input-above-${id}`) {
-        setAboveElement(newBlock);
-      } else if (event.over.id === `input-below-${id}`) {
-        setBelowElement(newBlock);
-      }
-    },
-  });
 
   const getBlockComponent = (type: BlockType): JSX.Element => {
     const newId = crypto.randomUUID();
@@ -74,21 +53,29 @@ const InputBlock: React.FC<InputBlockProps> = ({ id, content }) => {
 
   return (
     <div className="input-block">
-      <div
-        ref={setAboveRef}
-        className={`drop-zone ${isOverAbove ? "highlight" : ""}`}
+      <DropZone
+        zoneId={`input-above-${id}`}
+        onDrop={(blockType) => setAboveElement(getBlockComponent(blockType))}
       >
         {aboveElement || <p>⬆️ Oberhalb</p>}
-      </div>
+      </DropZone>
 
-      <p>⌨️ Eingabe: {content}</p>
+      <p>
+        ⌨️ Eingabe:{" "}
+        <input
+          className="function-input"
+          value={Content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Bedingung eingeben..."
+        />
+      </p>
 
-      <div
-        ref={setBelowRef}
-        className={`drop-zone ${isOverBelow ? "highlight" : ""}`}
+      <DropZone
+        zoneId={`input-below-${id}`}
+        onDrop={(blockType) => setBelowElement(getBlockComponent(blockType))}
       >
         {belowElement || <p>⬇️ Unterhalb</p>}
-      </div>
+      </DropZone>
     </div>
   );
 };

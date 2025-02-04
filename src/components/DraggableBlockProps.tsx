@@ -1,13 +1,23 @@
 import React from "react";
 import { useDraggable } from "@dnd-kit/core";
+import { BlockType } from "../types/struktogrammTypes";
 
 interface DraggableBlockProps {
   id: string;
   content: string;
+  /** Der Blocktyp, der beim Droppen verwendet wird */
+  type: BlockType;
 }
 
-const DraggableBlock: React.FC<DraggableBlockProps> = ({ id, content }) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
+const DraggableBlock: React.FC<DraggableBlockProps> = ({
+  id,
+  content,
+  type,
+}) => {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id,
+    data: { type }, // Hier wird der Blocktyp an das Draggable angehängt.
+  });
 
   return (
     <div

@@ -7,7 +7,7 @@
 
   min-width: 350px;
   min-height: 120px;
-  max-width: fit-content;
+  width: auto;
   max-height: fit-content;
   text-align: center;
   background-color: #f9f9f9;

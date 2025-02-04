@@ -1,5 +1,4 @@
 import React, { JSX, useState } from "react";
-import { useDroppable, useDndMonitor } from "@dnd-kit/core";
 import {
   ProcessBlock,
   LoopBlock,
@@ -8,6 +7,7 @@ import {
   FunctionBlock,
 } from "./index";
 import { BlockType } from "../../../types/struktogrammTypes";
+import DropZone from "../DropZone";
 import "./IfBlock.css";
 
 interface IfBlockProps {
@@ -19,27 +19,6 @@ const IfBlock: React.FC<IfBlockProps> = ({ id, condition }) => {
   const [ifCondition, setIfCondition] = useState(condition);
   const [trueBranch, setTrueBranch] = useState<JSX.Element[]>([]);
   const [falseBranch, setFalseBranch] = useState<JSX.Element[]>([]);
-
-  const { setNodeRef: setTrueRef, isOver: isOverTrue } = useDroppable({
-    id: `true-${id}`,
-  });
-  const { setNodeRef: setFalseRef, isOver: isOverFalse } = useDroppable({
-    id: `false-${id}`,
-  });
-
-  useDndMonitor({
-    onDragEnd: (event) => {
-      if (!event.over) return;
-      const blockType = event.active.id as BlockType;
-      const newBlock = getBlockComponent(blockType);
-
-      if (event.over.id === `true-${id}`) {
-        setTrueBranch((prev) => [...prev, newBlock]);
-      } else if (event.over.id === `false-${id}`) {
-        setFalseBranch((prev) => [...prev, newBlock]);
-      }
-    },
-  });
 
   const getBlockComponent = (type: BlockType): JSX.Element => {
     const newId = crypto.randomUUID();
@@ -80,9 +59,12 @@ const IfBlock: React.FC<IfBlockProps> = ({ id, condition }) => {
         placeholder="Bedingung eingeben..."
       />
       <div className="branches-div">
-        <div
-          ref={setTrueRef}
-          className={`if-branch ${isOverTrue ? "highlight" : ""}`}
+        <DropZone
+          zoneId={`true-${id}`}
+          onDrop={(blockType) =>
+            setTrueBranch((prev) => [...prev, getBlockComponent(blockType)])
+          }
+          className="if-branch"
         >
           <p>✅ True</p>
           {trueBranch.length > 0 ? (
@@ -90,11 +72,14 @@ const IfBlock: React.FC<IfBlockProps> = ({ id, condition }) => {
           ) : (
             <p className="placeholder">Element hier ablegen</p>
           )}
-        </div>
+        </DropZone>
 
-        <div
-          ref={setFalseRef}
-          className={`if-branch ${isOverFalse ? "highlight" : ""}`}
+        <DropZone
+          zoneId={`false-${id}`}
+          onDrop={(blockType) =>
+            setFalseBranch((prev) => [...prev, getBlockComponent(blockType)])
+          }
+          className="if-branch"
         >
           <p>❌ False</p>
           {falseBranch.length > 0 ? (
@@ -102,7 +87,7 @@ const IfBlock: React.FC<IfBlockProps> = ({ id, condition }) => {
           ) : (
             <p className="placeholder">Element hier ablegen</p>
           )}
-        </div>
+        </DropZone>
       </div>
     </div>
   );

@@ -1,16 +1,16 @@
 import React from "react";
-import { useDroppable } from "@dnd-kit/core";
+import DropZone from "../DropZone";
 
 const InitialDropzone: React.FC = () => {
-  const { setNodeRef, isOver } = useDroppable({ id: "editor-dropzone" });
-
   return (
-    <div
-      ref={setNodeRef}
-      className={`initial-dropzone ${isOver ? "highlight" : ""}`}
+    <DropZone
+      zoneId="editor-dropzone"
+      onDrop={() => {
+        /* hier kann z. B. der erste Block ins Editor-Layout eingefügt werden */
+      }}
     >
       <p>⬇️ Ziehe das erste Element hierher ⬇️</p>
-    </div>
+    </DropZone>
   );
 };
 
