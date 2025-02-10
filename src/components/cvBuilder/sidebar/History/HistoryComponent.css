@@ -1,0 +1,47 @@
+/* src/components/cvBuilder/sidebar/History/HistoryComponent.css */
+.cv-history-container {
+  max-height: 200px; /* Passt die Höhe an, um z. B. 5–7 Einträge anzuzeigen */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+.cv-history-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 0.5em;
+}
+
+.cv-history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cv-history-list-item {
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s;
+}
+
+.cv-history-list-item:hover {
+  background-color: #e6e6e6;
+}
+
+.cv-history-list-item-active {
+  background-color: #e0e0e0;
+}
+
+.cv-history-item-index {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.cv-history-item-description {
+  color: #555;
+}

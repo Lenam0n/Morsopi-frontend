@@ -1,0 +1,90 @@
+.highlight {
+  background-color: rgba(0, 255, 0, 0.3);
+  border: 2px dashed green;
+}
+
+.if-block {
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 300px;
+  text-align: center;
+}
+
+.if-condition {
+  width: 100%;
+  padding: 5px;
+}
+
+.if-branches {
+  display: flex;
+  justify-content: space-between;
+}
+
+.if-branch {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  margin: 5px;
+  min-height: 50px;
+  text-align: center;
+}
+
+.placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.loop-block {
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 350px;
+  text-align: center;
+}
+
+.loop-type {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.loop-inner,
+.loop-outer {
+  min-height: 50px;
+  border: 2px solid #ddd;
+  margin: 5px 0;
+  padding: 5px;
+  text-align: center;
+}
+
+.drop-zone {
+  min-height: 30px;
+  border: 2px dashed gray;
+  margin: 5px 0;
+  padding: 5px;
+  text-align: center;
+}
+
+.highlight {
+  background-color: rgba(0, 255, 0, 0.3);
+  border: 2px dashed green;
+}
+
+.drop-zone {
+  min-height: 30px;
+  border: 2px dashed gray;
+  margin: 5px 0;
+  padding: 5px;
+  text-align: center;
+}
+/* Tooltip-Styling */
+.block-tooltip {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.75);
+  color: gray;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+  pointer-events: none;
+  transform: translateY(-20px);
+  opacity: 0.9;
+  white-space: nowrap;
+}

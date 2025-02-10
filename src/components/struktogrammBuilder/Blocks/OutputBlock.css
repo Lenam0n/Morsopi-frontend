@@ -1,0 +1,23 @@
+.output-block {
+  background: #de7bef1f;
+  border: 2px solid #7b1fa2;
+  padding: 10px;
+  border-radius: 5px;
+  color: gray;
+  text-align: center;
+  min-width: 250px;
+  width: auto;
+}
+
+.drop-zone {
+  min-height: 40px;
+  border: 2px dashed gray;
+  margin: 5px 0;
+  padding: 5px;
+  text-align: center;
+}
+
+.highlight {
+  background-color: rgba(0, 255, 0, 0.3);
+  border: 2px dashed green;
+}

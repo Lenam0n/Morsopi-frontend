@@ -1,0 +1,25 @@
+/* src/components/CVTemplateBuilder/LayoutControls.css */
+.cv-builder-layout-controls {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+}
+
+.cv-builder-layout-controls h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cv-builder-layout-controls label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.cv-builder-layout-controls input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}

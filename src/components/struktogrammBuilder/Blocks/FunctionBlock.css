@@ -1,0 +1,9 @@
+.function-block {
+  background: #2dfb3e1f;
+  border: 2px solid #2dfb3e;
+  padding: 10px;
+  border-radius: 5px;
+  color: gray;
+  min-width: 250px;
+  width: auto;
+}

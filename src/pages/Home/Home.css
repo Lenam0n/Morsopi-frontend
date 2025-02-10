@@ -1,0 +1,83 @@
+/* Grundlegende Schriftart und Farben */
+.landing-container {
+  font-family: "Arial", sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hero-Bereich */
+.hero {
+  background: linear-gradient(135deg, #6b73ff, #000dff);
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background: white;
+  color: #000dff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.cta-button:hover {
+  background: #f0f0f0;
+}
+
+/* Features-Bereich */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 50px 20px;
+  gap: 20px;
+  background: #f9f9f9;
+}
+
+.feature {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.feature h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.feature p {
+  font-size: 1em;
+  margin: 15px 0;
+}
+
+.feature-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #000dff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.feature-button:hover {
+  background: #6b73ff;
+}

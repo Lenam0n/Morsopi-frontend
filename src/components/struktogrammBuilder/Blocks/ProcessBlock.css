@@ -1,0 +1,9 @@
+.process-block {
+  background: #fbc12d1f;
+  border: 2px solid #fbc02d;
+  padding: 10px;
+  border-radius: 5px;
+  color: gray;
+  min-width: 250px;
+  width: auto;
+}
