@@ -1,0 +1,12 @@
+/* src/components/CVTemplateBuilder/TemplatePreview.css */
+.cv-builder-template-preview {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  margin-top: 20px;
+}
+
+.cv-builder-preview-element {
+  border: 1px dashed #bbb;
+  padding: 5px;
+  background-color: #fafafa;
+}

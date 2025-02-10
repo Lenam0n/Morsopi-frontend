@@ -1,0 +1,23 @@
+/* src/components/CVTemplateBuilder/IconButton.css */
+/* src/components/CVTemplateBuilder/IconButton.css */
+.cv-builder-icon-button {
+  background: none;
+  border: none;
+  color: #007bff; /* Standardfarbe */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s, opacity 0.3s;
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+.cv-builder-icon-button:hover {
+  color: #0056b3; /* Farbe beim Hover */
+}
+
+.cv-builder-icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

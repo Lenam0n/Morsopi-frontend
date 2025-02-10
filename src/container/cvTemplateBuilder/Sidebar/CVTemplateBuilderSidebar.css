@@ -1,0 +1,26 @@
+/* src/container/cvTemplateBuilder/TemplateBuilderSidebar.css */
+.cv-builder-sidebar {
+  width: 300px;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.cv-builder-sidebar-controls {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.cv-builder-sidebar-elements {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}

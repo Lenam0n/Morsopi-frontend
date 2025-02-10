@@ -1,0 +1,97 @@
+/* src/components/CVTemplateBuilder/ElementPositionsList.css */
+.cv-element-positions-container {
+  border: 1px solid #444;
+  padding: 10px;
+  background-color: #f0f0f0;
+  margin-top: 20px;
+}
+
+.cv-element-positions-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cv-element-positions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cv-element-positions-item {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.cv-element-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.cv-element-info {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.cv-edit-button {
+  align-self: flex-start;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.cv-edit-button:hover {
+  background-color: #0056b3;
+}
+
+.cv-edit-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.cv-edit-menu label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.cv-edit-menu input {
+  width: 50px;
+  margin-left: 5px;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.cv-update-button, .cv-cancel-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.cv-cancel-button {
+  background-color: #dc3545;
+}
+
+.cv-update-button:hover {
+  background-color: #218838;
+}
+
+.cv-cancel-button:hover {
+  background-color: #c82333;
+}

@@ -1,0 +1,17 @@
+/* src/components/CVTemplateBuilder/elements/HeadingTextComponent.css */
+.cv-builder-heading-text {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+}
+
+.cv-builder-heading-text h2 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.cv-builder-heading-text p {
+  margin: 0;
+  color: #555;
+}
